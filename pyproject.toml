@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "yt-video-downloader"
+version = "1.0.0"
+description = "Production-ready YouTube video downloader powered by yt-dlp"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+  {name = "Your Name", email = "you@example.com"}
+]
+keywords = ["youtube", "downloader", "video", "yt-dlp"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Environment :: Console",
+  "Topic :: Multimedia :: Video"
+]
+dependencies = [
+  "yt-dlp>=2024.08.06",
+  "tomli>=2.0.1"
+]
+
+[project.scripts]
+yt-downloader = "yt_downloader.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
