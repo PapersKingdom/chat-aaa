@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title or "YT Downloader" }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              midnight: "#0b1120",
+              aurora: "#38bdf8",
+              flame: "#f97316",
+              emerald: "#22c55e",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-midnight text-white min-h-screen">
+    <div class="relative overflow-hidden">
+      <div class="absolute inset-0 -z-10">
+        <div class="absolute -top-20 left-0 h-72 w-72 rounded-full bg-aurora/30 blur-3xl"></div>
+        <div class="absolute top-24 right-0 h-80 w-80 rounded-full bg-flame/20 blur-3xl"></div>
+      </div>
+      <header class="max-w-6xl mx-auto px-6 py-10">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm uppercase tracking-[0.35em] text-aurora">Local-only downloads</p>
+            <h1 class="text-3xl sm:text-4xl font-semibold mt-2">AuroraTube Downloader</h1>
+            <p class="text-slate-300 mt-3 max-w-2xl">
+              Built on yt-dlp with zero external APIs. Queue multiple URLs, tune formats, and keep
+              every download on your own machine.
+            </p>
+          </div>
+          <div class="hidden md:flex items-center gap-4">
+            <div class="px-4 py-2 rounded-full bg-white/10 border border-white/10">
+              <p class="text-xs text-slate-200">Batch + Playlist Ready</p>
+            </div>
+            <div class="px-4 py-2 rounded-full bg-white/10 border border-white/10">
+              <p class="text-xs text-slate-200">Audio + Subtitle Modes</p>
+            </div>
+          </div>
+        </div>
+      </header>
+      {% block content %}{% endblock %}
+      <footer class="max-w-6xl mx-auto px-6 py-10 text-xs text-slate-400">
+        <p>Respect copyright laws and platform terms. Downloads stay local by design.</p>
+      </footer>
+    </div>
+  </body>
+</html>

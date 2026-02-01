@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="max-w-6xl mx-auto px-6 pb-16">
+  <div class="grid lg:grid-cols-[2fr_1fr] gap-8">
+    <section class="bg-white/5 border border-white/10 rounded-3xl p-6 shadow-xl">
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-semibold">Create a new download</h2>
+          <span class="text-xs text-emerald">Local engine ready</span>
+        </div>
+        <form action="/download" method="post" class="flex flex-col gap-6">
+          <div>
+            <label class="text-sm text-slate-300">Video or playlist URLs</label>
+            <textarea
+              name="urls"
+              required
+              rows="5"
+              placeholder="Paste one URL per line"
+              class="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-aurora focus:ring-2 focus:ring-aurora/40"
+            ></textarea>
+            <p class="text-xs text-slate-400 mt-2">Batch paste multiple URLs. You can mix playlists and single videos.</p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="text-sm text-slate-300">Output directory</label>
+              <input
+                type="text"
+                name="output_dir"
+                value="downloads"
+                class="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 text-sm text-white"
+              />
+            </div>
+            <div>
+              <label class="text-sm text-slate-300">Format selector</label>
+              <input
+                type="text"
+                name="format_selector"
+                value="bv*+ba/b"
+                class="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 text-sm text-white"
+              />
+              <p class="text-xs text-slate-400 mt-1">Use yt-dlp format strings (ex: bestvideo+bestaudio).</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <label class="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm">
+              <input type="checkbox" name="audio_only" class="h-4 w-4 rounded border-white/20" />
+              <span>Audio-only mode</span>
+            </label>
+            <label class="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm">
+              <input type="checkbox" name="subtitles" class="h-4 w-4 rounded border-white/20" />
+              <span>Fetch subtitles</span>
+            </label>
+            <label class="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm">
+              <input type="checkbox" name="no_playlist" class="h-4 w-4 rounded border-white/20" />
+              <span>Disable playlists</span>
+            </label>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div>
+              <label class="text-sm text-slate-300">Audio format</label>
+              <input
+                type="text"
+                name="audio_format"
+                value="mp3"
+                class="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 text-sm text-white"
+              />
+            </div>
+            <div>
+              <label class="text-sm text-slate-300">Subtitle language</label>
+              <input
+                type="text"
+                name="sub_lang"
+                value="en"
+                class="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 text-sm text-white"
+              />
+            </div>
+            <div>
+              <label class="text-sm text-slate-300">Rate limit</label>
+              <input
+                type="text"
+                name="rate_limit"
+                placeholder="2M, 500K"
+                class="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 text-sm text-white"
+              />
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div>
+              <label class="text-sm text-slate-300">Retry attempts</label>
+              <input
+                type="number"
+                name="retries"
+                value="10"
+                min="0"
+                class="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 text-sm text-white"
+              />
+            </div>
+            <div>
+              <label class="text-sm text-slate-300">Proxy URL</label>
+              <input
+                type="text"
+                name="proxy"
+                placeholder="socks5://127.0.0.1:9050"
+                class="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 text-sm text-white"
+              />
+            </div>
+            <div>
+              <label class="text-sm text-slate-300">Cookies file path</label>
+              <input
+                type="text"
+                name="cookies"
+                placeholder="/path/to/cookies.txt"
+                class="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 text-sm text-white"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4">
+            <button
+              type="submit"
+              class="inline-flex items-center gap-2 rounded-full bg-aurora px-6 py-3 text-sm font-semibold text-black shadow-lg shadow-aurora/40 hover:bg-aurora/90"
+            >
+              Launch download
+            </button>
+            <span class="text-xs text-slate-400">Jobs run in a local queue (2 concurrent workers).</span>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <aside class="space-y-6">
+      <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+        <h3 class="text-lg font-semibold mb-3">Advanced delivery</h3>
+        <ul class="space-y-3 text-sm text-slate-300">
+          <li class="flex gap-3">
+            <span class="h-2 w-2 mt-2 rounded-full bg-aurora"></span>
+            Playlist-aware batch queues with customizable output folders.
+          </li>
+          <li class="flex gap-3">
+            <span class="h-2 w-2 mt-2 rounded-full bg-aurora"></span>
+            Audio extraction + subtitle language targeting with a single toggle.
+          </li>
+          <li class="flex gap-3">
+            <span class="h-2 w-2 mt-2 rounded-full bg-aurora"></span>
+            Proxy, cookies, and throttling controls for resilient downloads.
+          </li>
+        </ul>
+      </div>
+
+      <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+        <h3 class="text-lg font-semibold">Recent jobs</h3>
+        <div class="mt-4 space-y-3">
+          {% if jobs %}
+            {% for job in jobs %}
+              <a
+                href="/jobs/{{ job.job_id }}"
+                class="block rounded-2xl border border-white/10 bg-black/30 px-4 py-3 hover:border-aurora/60"
+              >
+                <div class="flex items-center justify-between">
+                  <span class="text-sm">{{ job.urls | length }} URLs</span>
+                  <span class="text-xs text-slate-400">{{ job.status }}</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-2">{{ job.created_at.strftime("%Y-%m-%d %H:%M UTC") }}</p>
+              </a>
+            {% endfor %}
+          {% else %}
+            <p class="text-sm text-slate-400">No jobs yet. Your first download will appear here.</p>
+          {% endif %}
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+{% endblock %}

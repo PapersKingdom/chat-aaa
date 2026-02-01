@@ -12,6 +12,7 @@ A production-ready YouTube video downloader built on top of the `yt-dlp` library
 - Cookie and proxy support
 - Rate limiting and download retries
 - TOML configuration file support
+- Tailwind-powered local web UI with batch queues
 
 ## Installation
 
@@ -26,6 +27,16 @@ pip install -e .
 ```bash
 yt-downloader https://www.youtube.com/watch?v=dQw4w9WgXcQ
 ```
+
+### Web experience
+
+Launch the local UI (no external APIs, just yt-dlp):
+
+```bash
+yt-downloader-web
+```
+
+Then open `http://localhost:8000` to paste multiple URLs, configure formats, and monitor job status.
 
 ### Common examples
 

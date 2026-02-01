@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="max-w-5xl mx-auto px-6 pb-16">
+  <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+    {% if job %}
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <p class="text-xs uppercase tracking-[0.3em] text-aurora">Job {{ job.job_id }}</p>
+          <h2 class="text-2xl font-semibold mt-2">Download status: {{ job.status }}</h2>
+          <p class="text-sm text-slate-300 mt-1">Output directory: {{ job.config.output_dir }}</p>
+        </div>
+        <a href="/" class="rounded-full border border-white/20 px-4 py-2 text-sm hover:border-aurora/60">
+          New download
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4 mt-8">
+        <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+          <p class="text-xs text-slate-400">Created</p>
+          <p class="text-sm">{{ job.created_at.strftime("%Y-%m-%d %H:%M UTC") }}</p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+          <p class="text-xs text-slate-400">Started</p>
+          <p class="text-sm">
+            {% if job.started_at %}
+              {{ job.started_at.strftime("%Y-%m-%d %H:%M UTC") }}
+            {% else %}
+              Pending
+            {% endif %}
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+          <p class="text-xs text-slate-400">Finished</p>
+          <p class="text-sm">
+            {% if job.finished_at %}
+              {{ job.finished_at.strftime("%Y-%m-%d %H:%M UTC") }}
+            {% else %}
+              Pending
+            {% endif %}
+          </p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-white/10 bg-black/30 p-4 mt-6">
+        <h3 class="text-sm font-semibold">Queue URLs</h3>
+        <ul class="mt-3 space-y-2 text-sm text-slate-300">
+          {% for url in job.urls %}
+            <li class="truncate">{{ url }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-white/10 bg-black/30 p-4 mt-6">
+        <h3 class="text-sm font-semibold">Config snapshot</h3>
+        <div class="grid md:grid-cols-2 gap-3 text-xs text-slate-300 mt-3">
+          <p><span class="text-slate-500">Format:</span> {{ job.config.format }}</p>
+          <p><span class="text-slate-500">Audio only:</span> {{ job.config.audio_only }}</p>
+          <p><span class="text-slate-500">Audio format:</span> {{ job.config.audio_format }}</p>
+          <p><span class="text-slate-500">Subtitles:</span> {{ job.config.subtitles }}</p>
+          <p><span class="text-slate-500">Language:</span> {{ job.config.sub_lang }}</p>
+          <p><span class="text-slate-500">No playlist:</span> {{ job.config.no_playlist }}</p>
+          <p><span class="text-slate-500">Rate limit:</span> {{ job.config.rate_limit or "None" }}</p>
+          <p><span class="text-slate-500">Retries:</span> {{ job.config.retries }}</p>
+          <p><span class="text-slate-500">Proxy:</span> {{ job.config.proxy or "None" }}</p>
+          <p><span class="text-slate-500">Cookies:</span> {{ job.config.cookies or "None" }}</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-white/10 bg-black/30 p-4 mt-6">
+        <h3 class="text-sm font-semibold">Job message</h3>
+        <p class="text-sm text-slate-300 mt-2">
+          {{ job.message or "The download is queued or running. Refresh the page to see updates." }}
+        </p>
+      </div>
+    {% else %}
+      <h2 class="text-2xl font-semibold">Job not found</h2>
+      <p class="text-sm text-slate-300 mt-2">Return to the dashboard to create a new download.</p>
+      <a href="/" class="mt-6 inline-flex rounded-full border border-white/20 px-4 py-2 text-sm">
+        Back to home
+      </a>
+    {% endif %}
+  </div>
+</main>
+{% endblock %}
